@@ -1,0 +1,55 @@
+
+
+.card {
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 15px;
+  margin-bottom: 15px;
+  width: 225px;
+  height: 100px;
+  display: flex;
+}
+.details
+{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+.col-2
+{
+  display: flex;
+  align-items: flex-start;
+}
+.col-3
+{
+  display: flex;
+  align-items: center;
+}
+.card-title {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.icons-class {
+  font-size: 20px;
+  margin-right: 10px;
+}
+
+.card p {
+  margin: 0;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.card li {
+  list-style-type: none;
+  padding: 8px;
+  background-color: #f5f5f5;
+  border-radius: 4px;
+  margin: 5px 0;
+  color: #555;
+}
+

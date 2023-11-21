@@ -1,0 +1,18 @@
+.title-of-group
+{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+    
+}
+.group{
+  padding: 5px;
+  margin: 5px;
+}
+.icons-of-group span
+{
+ padding:0 2.5px;
+}
+.icons-of-group{
+  display: flex;
+}
