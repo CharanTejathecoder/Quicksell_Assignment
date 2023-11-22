@@ -1,13 +1,15 @@
 .groups-container{
     display: flex;
-    justify-content: space-around;
+    justify-content: space-evenly;
     flex-wrap: wrap;
+    
   }
   
   @media (max-width: 768px) {
     .groups-container {
       flex-direction: column;
       align-items: center;
+      width: 100%;
     }
   }
   

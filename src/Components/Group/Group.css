@@ -16,8 +16,11 @@
   justify-content: space-between;
 }
 @media (max-width: 768px) {
-  .group {
+  .group{
     width: 90%;
+  }
+  .cards{
+    width: 100%;
   }
 }
 
