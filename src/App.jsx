@@ -7,16 +7,16 @@ import { FcTodoList,FcApproval, FcLowPriority,FcMediumPriority,FcHighPriority,Fc
 
 function App() {
   const URL = 'https://api.quicksell.co/v1/internal/frontend-assignment';
-  const [usersData, setUsers] = useState([]);
-  const [ticketsData, setTickets] = useState([]);
-  const [group, setGroup] = useState('status');
-  const [order, setOrder] = useState('priority');
-  const [groupData, setGroupData] = useState({});
   const icons = {
     status: [FcTodoList, FcApproval, FcPieChart, FcCancel, FcExpired],
     userId: [FaAdn,FcBusinessman,FcServiceMark, FcManager, FcLinux],
     priority: [BiDotsHorizontalRounded, FcLowPriority,FcMediumPriority, FaExclamationTriangle,FcHighPriority]
   };
+
+  
+  const [group, setGroup] = useState('status');
+  const [order, setOrder] = useState('priority');
+  const [groupData, setGroupData] = useState({});
 
   useEffect(() => {
     const savedGroup = localStorage.getItem('savedGroup');
@@ -34,9 +34,7 @@ function App() {
         }
         const data = await response.json();
         const { tickets, users } = data;
-        setUsers(users);
-        setTickets(tickets);
-        const groupedData = groupAndOrderBy(ticketsData, group, order, usersData);
+        const groupedData = groupAndOrderBy(tickets, group, order, users);
         setGroupData(groupedData);
       } catch (error) {
         console.error('Error fetching data:', error);
