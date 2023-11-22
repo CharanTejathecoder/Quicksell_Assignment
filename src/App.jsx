@@ -1,13 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import Group from './Components/Group/Group';
 import Navbar from './Components/Navbar/Navbar';
-import { FaCheckCircle, FaExclamationTriangle, FaAdn } from 'react-icons/fa';
-import { TbProgressCheck } from 'react-icons/tb';
-import { MdCancel } from 'react-icons/md';
-import { FcTodoList } from 'react-icons/fc';
-import { CiCircleAlert } from 'react-icons/ci';
+import {  FaExclamationTriangle, FaAdn } from 'react-icons/fa';
 import { BiDotsHorizontalRounded } from 'react-icons/bi';
-import { PiCellSignalLowBold, PiCellSignalMediumBold, PiCellSignalFullBold } from 'react-icons/pi';
+import { FcTodoList,FcApproval, FcLowPriority,FcMediumPriority,FcHighPriority,FcCancel,FcPieChart ,FcExpired,FcBusinessman,FcManager,FcServiceMark,FcLinux} from "react-icons/fc";
 
 function App() {
   const URL = 'https://api.quicksell.co/v1/internal/frontend-assignment';
@@ -17,9 +13,9 @@ function App() {
   const [order, setOrder] = useState('priority');
   const [groupData, setGroupData] = useState({});
   const icons = {
-    status: [FcTodoList, FaCheckCircle, TbProgressCheck, MdCancel, CiCircleAlert],
-    userId: [FaAdn, FaAdn, FaAdn, FaAdn, FaAdn],
-    priority: [BiDotsHorizontalRounded, PiCellSignalLowBold, PiCellSignalMediumBold, PiCellSignalFullBold, FaExclamationTriangle],
+    status: [FcTodoList, FcApproval, FcPieChart, FcCancel, FcExpired],
+    userId: [FaAdn,FcBusinessman,FcServiceMark, FcManager, FcLinux],
+    priority: [BiDotsHorizontalRounded, FcLowPriority,FcMediumPriority, FaExclamationTriangle,FcHighPriority]
   };
 
   useEffect(() => {
@@ -40,7 +36,7 @@ function App() {
         const { tickets, users } = data;
         setUsers(users);
         setTickets(tickets);
-        const groupedData = groupAndOrderBy(tickets, group, order, usersData);
+        const groupedData = groupAndOrderBy(ticketsData, group, order, usersData);
         setGroupData(groupedData);
       } catch (error) {
         console.error('Error fetching data:', error);
@@ -157,7 +153,7 @@ function App() {
 
   function getUserName(userId, usersData) {
     const user = usersData.find((user) => user.id === userId);
-    return user ? user.name : 'Unknown User';
+    return user ? user.name : 'Unknown-User';
   }
 
   return (
