@@ -13,7 +13,7 @@ function Group({ heading, tickets, group }) {
   const prior = ["No priority", "Low", "Medium", "High", "Urgent"];
   let groupTitle; 
   if (group === "userId") {
-    groupTitle = tickets[0].userName;
+    groupTitle = tickets.length > 0 ? tickets[0].userName : "Unknown User";
   }
   let groupIcon;
   switch(group)
