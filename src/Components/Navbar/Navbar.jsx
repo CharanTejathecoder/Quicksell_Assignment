@@ -5,15 +5,17 @@ import "./Navbar.css";
 
 const Navbar = ({ setGroup, setOrder }) => {
   const [isDropdownVisible, setDropdownVisible] = useState(false);
+  const [savedGroup, setSavedGroup] = useState('status'); // Initialize with default value
+  const [savedOrder, setSavedOrder] = useState('priority'); // Initialize with default value
 
   useEffect(() => {
-    
-    const savedGroup = localStorage.getItem('savedGroup') || 'status';
-    const savedOrder = localStorage.getItem('savedOrder') || 'priority';
+    const groupFromStorage = localStorage.getItem('savedGroup') || 'status';
+    const orderFromStorage = localStorage.getItem('savedOrder') || 'priority';
 
-    
-    setGroup(savedGroup);
-    setOrder(savedOrder);
+    setSavedGroup(groupFromStorage);
+    setSavedOrder(orderFromStorage);
+    setGroup(groupFromStorage);
+    setOrder(orderFromStorage);
   }, [setGroup, setOrder]);
 
   const toggleDropdown = () => {
@@ -33,16 +35,16 @@ const Navbar = ({ setGroup, setOrder }) => {
             <div className="form-row">
               <label htmlFor="dropdown1">Grouping</label>
               <select id="dropdown1" onChange={(e) => { setGroup(e.target.value); }}>
-                <option value="status">Status</option>
-                <option value="userId">User</option>
-                <option value="priority">Priority</option>
+                <option value="status" selected={savedGroup === 'status'}>Status</option>
+                <option value="userId" selected={savedGroup === 'userId'}>User</option>
+                <option value="priority" selected={savedGroup === 'priority'}>Priority</option>
               </select>
             </div>
             <div className="form-row">
               <label htmlFor="dropdown2">Ordering</label>
               <select id="dropdown2" onChange={(e) => { setOrder(e.target.value); }}>
-                <option value="priority">Priority</option>
-                <option value="title">Title</option>
+                <option value="priority" selected={savedOrder === 'priority'}>Priority</option>
+                <option value="title" selected={savedOrder === 'title'}>Title</option>
               </select>
             </div>
           </form>
