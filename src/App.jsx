@@ -1,15 +1,13 @@
-import './App.css';
-import { useEffect, useState } from 'react';
-import axios from 'axios';
+import React, { useEffect, useState } from 'react';
 import Group from './Components/Group/Group';
 import Navbar from './Components/Navbar/Navbar';
-import { FaCheckCircle,FaExclamationTriangle,FaAdn } from "react-icons/fa";
-import { TbProgressCheck } from "react-icons/tb";
-import { MdCancel } from "react-icons/md";
-import { FcTodoList } from "react-icons/fc";
-import { CiCircleAlert } from "react-icons/ci";
-import { BiDotsHorizontalRounded } from "react-icons/bi";
-import { PiCellSignalLowBold,PiCellSignalMediumBold,PiCellSignalFullBold } from "react-icons/pi";
+import { FaCheckCircle, FaExclamationTriangle, FaAdn } from 'react-icons/fa';
+import { TbProgressCheck } from 'react-icons/tb';
+import { MdCancel } from 'react-icons/md';
+import { FcTodoList } from 'react-icons/fc';
+import { CiCircleAlert } from 'react-icons/ci';
+import { BiDotsHorizontalRounded } from 'react-icons/bi';
+import { PiCellSignalLowBold, PiCellSignalMediumBold, PiCellSignalFullBold } from 'react-icons/pi';
 
 function App() {
   const URL = 'https://api.quicksell.co/v1/internal/frontend-assignment';
@@ -18,30 +16,44 @@ function App() {
   const [group, setGroup] = useState('status');
   const [order, setOrder] = useState('priority');
   const [groupData, setGroupData] = useState({});
-  const icons = 
-  {
-    status:[FcTodoList, FaCheckCircle, TbProgressCheck, MdCancel, CiCircleAlert],
-    userId:[FaAdn,FaAdn,FaAdn,FaAdn,FaAdn],
-    priority:[BiDotsHorizontalRounded,PiCellSignalLowBold,PiCellSignalMediumBold,PiCellSignalFullBold,FaExclamationTriangle]
+  const icons = {
+    status: [FcTodoList, FaCheckCircle, TbProgressCheck, MdCancel, CiCircleAlert],
+    userId: [FaAdn, FaAdn, FaAdn, FaAdn, FaAdn],
+    priority: [BiDotsHorizontalRounded, PiCellSignalLowBold, PiCellSignalMediumBold, PiCellSignalFullBold, FaExclamationTriangle],
   };
 
   useEffect(() => {
-    const fetchData = () => {
-      axios.get(URL)
-        .then(response => {
-          const { tickets, users } = response.data;
-          setUsers(users);
-          setTickets(tickets);
-          const groupedData = groupAndOrderBy(ticketsData, group, order, usersData);
-          setGroupData(groupedData);
-          
-        })
-        
+    const savedGroup = localStorage.getItem('savedGroup');
+    const savedOrder = localStorage.getItem('savedOrder');
+    setGroup(savedGroup || 'status');
+    setOrder(savedOrder || 'priority');
+  }, []);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch(URL);
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        const data = await response.json();
+        const { tickets, users } = data;
+        setUsers(users);
+        setTickets(tickets);
+        const groupedData = groupAndOrderBy(tickets, group, order, usersData);
+        setGroupData(groupedData);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
     };
 
     fetchData();
-  }, [group,order]);
+  }, [group, order]);
 
+  useEffect(() => {
+    localStorage.setItem('savedGroup', group);
+    localStorage.setItem('savedOrder', order);
+  }, [group, order]);
 
   function groupAndOrderBy(ticketsData, grouping, ordering, usersData) {
     if (!ticketsData || !usersData) {
@@ -52,15 +64,15 @@ function App() {
       const statusIcons = icons['status'];
       if (statusIcons && statusIcons.length > 0) {
         switch (status) {
-          case "Todo":
+          case 'Todo':
             return statusIcons[0];
-          case "Done":
+          case 'Done':
             return statusIcons[1];
-          case "In progress":
+          case 'In progress':
             return statusIcons[2];
-          case "Canceled":
+          case 'Canceled':
             return statusIcons[3];
-          case "Backlog":
+          case 'Backlog':
             return statusIcons[4];
           default:
             return null;
@@ -68,20 +80,20 @@ function App() {
       }
       return null;
     };
-    
+
     const getUserIcon = (userId) => {
       const userIcons = icons['userId'];
       if (userIcons && userIcons.length > 0) {
         switch (userId) {
-          case "usr-1":
+          case 'usr-1':
             return userIcons[0];
-          case "usr-2":
+          case 'usr-2':
             return userIcons[1];
-          case "usr-3":
+          case 'usr-3':
             return userIcons[2];
-          case "usr-4":
+          case 'usr-4':
             return userIcons[3];
-          case "usr-5":
+          case 'usr-5':
             return userIcons[4];
           default:
             return null;
@@ -109,30 +121,24 @@ function App() {
       }
       return null;
     };
-    
-    
-  
-   
-  
-  
+
     const groupedData = {};
     ticketsData.forEach((ticket) => {
       const groupByValue = ticket[grouping];
-  
+
       if (!groupedData[groupByValue]) {
         groupedData[groupByValue] = [];
       }
-  
+
       groupedData[groupByValue].push({
         ...ticket,
         userName: getUserName(ticket.userId, usersData),
         statusIcon: getStatusIcon(ticket.status),
-        userIcon : getUserIcon(ticket.userId),
-        priorityIcon : getPriorityIcon(ticket.priority)
-        
+        userIcon: getUserIcon(ticket.userId),
+        priorityIcon: getPriorityIcon(ticket.priority),
       });
     });
-  
+
     for (const group in groupedData) {
       if (groupedData.hasOwnProperty(group)) {
         groupedData[group] = groupedData[group].sort((a, b) => {
@@ -145,30 +151,29 @@ function App() {
         });
       }
     }
-  
+
     return groupedData;
   }
 
-  
   function getUserName(userId, usersData) {
     const user = usersData.find((user) => user.id === userId);
     return user ? user.name : 'Unknown User';
   }
-  
 
-
-
-  
   return (
     <div className="App">
-      <Navbar setGroup={setGroup} setOrder={setOrder}/>
+      <Navbar setGroup={setGroup} setOrder={setOrder} />
       <div className="groups-container">
-      {Object.entries(groupData).map(([heading, ticketsData]) => (
-      <Group key={heading} heading={heading} tickets={ticketsData} group={group}/>
-    ))}</div>
+        {groupData.length === 0 ? (
+          <p>Loading...</p>
+        ) : (
+          Object.entries(groupData).map(([heading, ticketsData]) => (
+            <Group key={heading} heading={heading} tickets={ticketsData} group={group} />
+          ))
+        )}
+      </div>
     </div>
   );
 }
-
 
 export default App;
