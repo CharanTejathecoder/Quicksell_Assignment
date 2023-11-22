@@ -4,6 +4,7 @@ import Navbar from './Components/Navbar/Navbar';
 import {  FaExclamationTriangle, FaAdn } from 'react-icons/fa';
 import { BiDotsHorizontalRounded } from 'react-icons/bi';
 import { FcTodoList,FcApproval, FcLowPriority,FcMediumPriority,FcHighPriority,FcCancel,FcPieChart ,FcExpired,FcBusinessman,FcManager,FcServiceMark,FcLinux} from "react-icons/fc";
+import './App.css';
 
 function App() {
   const URL = 'https://api.quicksell.co/v1/internal/frontend-assignment';
@@ -14,14 +15,14 @@ function App() {
   };
 
   
-  const [group, setGroup] = useState('status');
+  const [group, setGroup] = useState('priority');
   const [order, setOrder] = useState('priority');
   const [groupData, setGroupData] = useState({});
 
   useEffect(() => {
     const savedGroup = localStorage.getItem('savedGroup');
     const savedOrder = localStorage.getItem('savedOrder');
-    setGroup(savedGroup || 'status');
+    setGroup(savedGroup || 'priority');
     setOrder(savedOrder || 'priority');
   }, []);
 

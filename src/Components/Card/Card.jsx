@@ -1,12 +1,13 @@
 import React from "react";
 import "./Card.css";
 
+
 function Card({ ticket, group }) {
   return (
     <div className="card">
-      <div className="details">
+      <div className="details ">
         <div>
-          <span>{ticket.id}</span>
+          <span className="light-font">{ticket.id}</span>
         </div>
         <div className="col-2">
           {group !== "status" && (
@@ -21,14 +22,14 @@ function Card({ ticket, group }) {
         </div>
         <div className="col-3">
           {group !== "priority" && (
-            <span>
+            <span className="col-3-icon">
               {ticket.priorityIcon &&
                 React.createElement(ticket.priorityIcon, {
                   className: "icons-class",
                 })}
             </span>
           )}
-          <span>{ticket.tag}</span>
+          <span className="light-font">{ticket.tag}</span>
         </div>
       </div>
       <div className="userImage">

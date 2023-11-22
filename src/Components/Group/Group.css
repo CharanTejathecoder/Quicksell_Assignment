@@ -1,18 +1,23 @@
-.title-of-group
-{
+.title-of-group {
   display: flex;
   justify-content: space-between;
-  align-items: center;
-    
+  align-items: center;   
 }
-.group{
+.group {
   padding: 5px;
   margin: 5px;
+  width: 250px;
 }
-.icons-of-group span
-{
- padding:0 2.5px;
+.icons-of-group span {
+ padding:0 5px;
 }
 .icons-of-group{
   display: flex;
+  justify-content: space-between;
 }
+@media (max-width: 768px) {
+  .group {
+    width: 100%;
+  }
+}
+
